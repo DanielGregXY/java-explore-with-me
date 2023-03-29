@@ -1,6 +1,8 @@
 package ru.practicum.ewm.client;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -16,13 +18,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class StatsWebClient {
 
-    private final WebClient webClient;
+     final WebClient webClient;
 
-    private static final String POST_HIT_URL = "/hit";
+     static final String POST_HIT_URL = "/hit";
 
-    private static final String GET_STATS_URL = "/stats";
+     static final String GET_STATS_URL = "/stats";
 
 
     public EndpointHitDto postHit(EndpointHitDto endpointHitDto) {

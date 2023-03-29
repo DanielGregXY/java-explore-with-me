@@ -3,6 +3,8 @@ package ru.practicum.ewm.config;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -13,10 +15,11 @@ import reactor.netty.tcp.TcpClient;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class StatsWebClientConfig {
 
-    private static final String BASE_URL = "https://localhost:9090";
-    private static final int TIMEOUT = 5000;
+     static final String BASE_URL = "https://localhost:9090";
+     static final int TIMEOUT = 5000;
 
     @Bean
     public WebClient webClientWithTimeout() {

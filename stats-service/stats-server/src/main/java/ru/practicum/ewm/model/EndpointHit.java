@@ -1,6 +1,7 @@
 package ru.practicum.ewm.model;
 
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.lang.Nullable;
 
@@ -12,23 +13,24 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EndpointHit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+     Long id;
 
     @Nullable
     @Length(max = 50)
-    private String app;
+     String app;
 
     @Nullable
     @Length(max = 200)
-    private String uri;
+     String uri;
 
     @Nullable
     @Length(max = 50)
-    private String ip;
+     String ip;
 
-    private LocalDateTime timestamp;
+     LocalDateTime timestamp;
 }
