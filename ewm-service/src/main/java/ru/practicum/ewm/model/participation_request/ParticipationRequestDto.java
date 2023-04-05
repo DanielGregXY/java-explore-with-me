@@ -1,22 +1,19 @@
 package ru.practicum.ewm.model.participation_request;
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
 @Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ParticipationRequestDto {
 
-    Long id;
+    private Long id;
 
-    Long event;
+    private Long event;
 
-    Long requester;
+    private Long requester;
 
-    ParticipationRequestState status;
+    private ParticipationRequestState status;
 
-    LocalDateTime created;
+    private LocalDateTime created;
 }

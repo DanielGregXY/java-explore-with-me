@@ -1,9 +1,7 @@
 package ru.practicum.ewm.model.location;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
@@ -11,14 +9,13 @@ import javax.persistence.*;
 @Table(name = "locations")
 @Getter
 @Setter
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    Float lat;
+    private Float lat;
 
-    Float lon;
+    private Float lon;
 }
