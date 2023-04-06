@@ -44,7 +44,7 @@ public class AdminUserService {
     @Transactional
     public void delete(long userId) {
         adminUserRepository.findById(userId).orElseThrow(() -> {
-            throw new ObjectNotFoundException("User not found");
+            throw new ObjectNotFoundException("User not found" + userId);
         });
         adminUserRepository.deleteById(userId);
         log.info("User with id {} deleted", userId);
