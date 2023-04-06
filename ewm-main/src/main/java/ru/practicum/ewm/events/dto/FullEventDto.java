@@ -1,9 +1,7 @@
 package ru.practicum.ewm.events.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.ewm.categories.dto.CategoryDto;
 import ru.practicum.ewm.location.model.Location;
 import ru.practicum.ewm.user.dto.UserDto;
@@ -12,21 +10,22 @@ import ru.practicum.ewm.user.dto.UserDto;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class FullEventDto {
-    private Long id;
-    private String annotation;
-    private CategoryDto category;
-    private Integer confirmedRequests;
-    private String createdOn;
-    private String description;
-    private String eventDate;
-    private UserDto.UserShortDto initiator;
-    private Location location;
-    private Boolean paid;
-    private Integer participantLimit;
-    private String publishedOn;
-    private Boolean requestModeration;
-    private String state;
-    private String title;
-    private Long views;
+    Long id;
+    String annotation;
+    CategoryDto category;
+    Integer confirmedRequests;
+    String createdOn;
+    String description;
+    String eventDate;
+    UserDto.UserShortDto initiator;
+    Location location;
+    Boolean paid;
+    Integer participantLimit;
+    String publishedOn;
+    Boolean requestModeration;
+    String state;
+    String title;
+    Long views;
 }

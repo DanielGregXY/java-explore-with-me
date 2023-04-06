@@ -1,24 +1,23 @@
 package ru.practicum.ewm.events.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.ewm.location.model.Location;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventUpdateRequestDto {
-    private String annotation;
-    private Long category;
-    private String description;
-    private String eventDate;
-    private Location location;
-    private Boolean paid;
-    private Integer participantLimit;
-    private Boolean requestModeration;
-    private String stateAction;
-    private String title;
+    String annotation;
+    Long category;
+    String description;
+    String eventDate;
+    Location location;
+    Boolean paid;
+    Integer participantLimit;
+    Boolean requestModeration;
+    String stateAction;
+    String title;
 }
