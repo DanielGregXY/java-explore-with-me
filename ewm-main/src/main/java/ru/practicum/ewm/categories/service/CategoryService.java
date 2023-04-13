@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.ewm.categories.dto.CategoryDto;
+import ru.practicum.ewm.categories.dto.CategoryDTO;
 import ru.practicum.ewm.categories.mapper.CategoryMapper;
 import ru.practicum.ewm.categories.model.Category;
 import ru.practicum.ewm.categories.repository.CategoryRepository;
@@ -23,47 +23,47 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public CategoryDto create(CategoryDto categoryDto) {
-        Category category = categoryRepository.save(CategoryMapper.CATEGORY_MAPPER.toCategory(categoryDto));
+    public CategoryDTO create(CategoryDTO categoryDTO) {
+        Category category = categoryRepository.save(CategoryMapper.CATEGORY_MAPPER.toCategory(categoryDTO));
         log.info("Category created with id {}", category.getId());
-        return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(category);
+        return CategoryMapper.CATEGORY_MAPPER.toCategoryDTO(category);
     }
 
     @Transactional
-    public CategoryDto update(long catId, CategoryDto categoryDto) {
+    public CategoryDTO update(long catId, CategoryDTO categoryDTO) {
         Category category = categoryRepository.findById(catId).orElseThrow(() -> {
-            throw new ObjectNotFoundException("Category not found");
+            throw new ObjectNotFoundException("Category not found.");
         });
-        if (categoryDto.getName().equals(category.getName())) {
-            throw new ConflictException("Same category name");
+        if (categoryDTO.getName().equals(category.getName())) {
+            throw new ConflictException("Same category name.");
         }
-        category.setName(categoryDto.getName());
+        category.setName(categoryDTO.getName());
         log.info("Category with id {} updated", catId);
-        return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(categoryRepository.save(category));
+        return CategoryMapper.CATEGORY_MAPPER.toCategoryDTO(categoryRepository.save(category));
     }
 
     @Transactional
     public void delete(long catId) {
         categoryRepository.findById(catId).orElseThrow(() -> {
-            throw new ObjectNotFoundException("Category not found");
+            throw new ObjectNotFoundException("Category not found.");
         });
         categoryRepository.deleteById(catId);
         log.info("Category with id {} deleted", catId);
     }
 
-    public List<CategoryDto> findAll(Pageable pageable) {
-        log.info("Categories sent");
+    public List<CategoryDTO> findAll(Pageable pageable) {
+        log.info("Categories sent.");
         return categoryRepository.findAll(pageable).stream()
-                .map(CategoryMapper.CATEGORY_MAPPER::toCategoryDto)
+                .map(CategoryMapper.CATEGORY_MAPPER::toCategoryDTO)
                 .collect(Collectors.toList());
     }
 
-    public CategoryDto findById(long catId) {
+    public CategoryDTO findById(long catId) {
         Category category = categoryRepository.findById(catId).orElseThrow(() -> {
-            log.warn("Category not found");
-            throw new ObjectNotFoundException("Category not found");
+            log.warn("Category not found.");
+            throw new ObjectNotFoundException("Category not found.");
         });
         log.info("Category with id {} sent", catId);
-        return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(category);
+        return CategoryMapper.CATEGORY_MAPPER.toCategoryDTO(category);
     }
 }

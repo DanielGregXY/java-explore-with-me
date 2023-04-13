@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.ewm.categories.dto.CategoryDto;
+import ru.practicum.ewm.categories.dto.CategoryDTO;
 import ru.practicum.ewm.categories.service.CategoryService;
 
 import javax.validation.Valid;
@@ -19,14 +19,14 @@ public class AdminCategoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryDto create(@Valid @RequestBody CategoryDto categoryDto) {
-        return categoryService.create(categoryDto);
+    public CategoryDTO create(@Valid @RequestBody CategoryDTO categoryDTO) {
+        return categoryService.create(categoryDTO);
     }
 
     @PatchMapping("/{catId}")
-    public CategoryDto update(@Positive @PathVariable Long catId,
-                         @Valid @RequestBody CategoryDto categoryDto) {
-        return categoryService.update(catId, categoryDto);
+    public CategoryDTO update(@Positive @PathVariable Long catId,
+                              @Valid @RequestBody CategoryDTO categoryDTO) {
+        return categoryService.update(catId, categoryDTO);
     }
 
     @DeleteMapping("/{catId}")

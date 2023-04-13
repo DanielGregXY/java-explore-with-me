@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.events.dto.EventState;
-import ru.practicum.ewm.events.dto.EventUpdateRequestDto;
-import ru.practicum.ewm.events.dto.FullEventDto;
+import ru.practicum.ewm.events.dto.EventUpdateRequestDTO;
+import ru.practicum.ewm.events.dto.FullEventDTO;
 import ru.practicum.ewm.events.service.AdminEventService;
 
 import javax.validation.constraints.Positive;
@@ -20,7 +20,7 @@ public class AdminEventController {
     private final AdminEventService adminEventService;
 
     @GetMapping
-    public List<FullEventDto> findEvents(@RequestParam(required = false) List<Long> users,
+    public List<FullEventDTO> findEvents(@RequestParam(required = false) List<Long> users,
                                          @RequestParam(required = false) List<EventState> states,
                                          @RequestParam(required = false) List<Long> categories,
                                          @RequestParam(required = false) String rangeStart,
@@ -31,8 +31,8 @@ public class AdminEventController {
     }
 
     @PatchMapping("/{eventId}")
-    public FullEventDto updateEvent(@PathVariable Long eventId,
-                                    @RequestBody EventUpdateRequestDto eventUpdateRequestDto) {
-        return adminEventService.updateEvent(eventId, eventUpdateRequestDto);
+    public FullEventDTO updateEvent(@PathVariable Long eventId,
+                                    @RequestBody EventUpdateRequestDTO eventUpdateRequestDTO) {
+        return adminEventService.updateEvent(eventId, eventUpdateRequestDTO);
     }
 }
