@@ -174,7 +174,7 @@
 						"exec": [
 							"pm.globals.set(\"categoryId\", pm.response.json().id);\r",
 							"\r",
-							"pm.test(\"Status code is201\", function () {\r",
+							"pm.test(\"Status code is 201\", function () {\r",
 							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
 							"});\r",
 							"pm.test(\"Test create category\", function () {\r",
@@ -256,7 +256,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"annotation\":\"good event for good people\",\r\n    \"category\":{{categoryId}},\r\n    \"description\":\"Spending time in our company\",\r\n    \"eventDate\":\"2023-04-04 20:55:29\",\r\n    \"location\":\r\n        {\r\n        \"lat\":-15.261,\r\n        \"lon\":55.114\r\n        },\r\n    \"paid\":\"false\",\r\n    \"participantLimit\":\"559\",\r\n    \"requestModeration\":true,\r\n    \"title\":\"Evening meating\"\r\n}"
+					"raw": "{\r\n    \"annotation\":\"good event for good people\",\r\n    \"category\":{{categoryId}},\r\n    \"description\":\"Spending time in our company\",\r\n    \"eventDate\":\"2023-10-04 20:55:29\",\r\n    \"location\":\r\n        {\r\n        \"lat\":-15.261,\r\n        \"lon\":55.114\r\n        },\r\n    \"paid\":\"false\",\r\n    \"participantLimit\":\"559\",\r\n    \"requestModeration\":true,\r\n    \"title\":\"Evening meating\"\r\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/users/:userId/events",
@@ -285,7 +285,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 409\", function () {\r",
+							"pm.test(\"Status code is 400\", function () {\r",
 							"    pm.expect(pm.response.code).to.be.eql(400);\r",
 							"});"
 						],
