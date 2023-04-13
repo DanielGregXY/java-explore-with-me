@@ -174,7 +174,7 @@
 						"exec": [
 							"pm.globals.set(\"categoryId\", pm.response.json().id);\r",
 							"\r",
-							"pm.test(\"Status code is 201\", function () {\r",
+							"pm.test(\"Status code is201\", function () {\r",
 							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
 							"});\r",
 							"pm.test(\"Test create category\", function () {\r",
