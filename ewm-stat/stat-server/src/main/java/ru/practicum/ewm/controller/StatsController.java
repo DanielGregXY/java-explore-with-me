@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.ewm.dto.EndpointHitDto;
+import ru.practicum.ewm.dto.EndpointHitDTO;
 import ru.practicum.ewm.dto.ViewStatsDto;
 import ru.practicum.ewm.service.StatsService;
 
@@ -24,7 +24,7 @@ public class StatsController {
 
     @PostMapping("/hit")
     @ResponseStatus(HttpStatus.CREATED)
-    public EndpointHitDto create(@Valid @RequestBody EndpointHitDto endpointHitDto) {
+    public EndpointHitDTO create(@Valid @RequestBody EndpointHitDTO endpointHitDto) {
         return statsService.create(endpointHitDto);
     }
 
