@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.mapper.StatsMapper;
-import ru.practicum.ewm.dto.EndpointHitDto;
+import ru.practicum.ewm.dto.EndpointHitDTO;
 import ru.practicum.ewm.dto.ViewStatsDto;
 import ru.practicum.ewm.model.EndpointHit;
 import ru.practicum.ewm.repository.StatsRepository;
@@ -24,7 +24,7 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     @Transactional
-    public EndpointHitDto create(EndpointHitDto endpointHitDto) {
+    public EndpointHitDTO create(EndpointHitDTO endpointHitDto) {
         EndpointHit endpointHit = statsRepository.save(StatsMapper.STATS_MAPPER.toEndpointHit(endpointHitDto));
         log.info("Hit created with id {}", endpointHit.getId());
         return StatsMapper.STATS_MAPPER.toEndpointHitDto(endpointHit);

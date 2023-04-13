@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.ewm.compilation.dto.ResponseCompilationDto;
+import ru.practicum.ewm.compilation.dto.ResponseCompilationDTO;
 import ru.practicum.ewm.compilation.service.CompilationsService;
 
 import javax.validation.constraints.Positive;
@@ -20,7 +20,7 @@ public class PublicCompilationsController {
 
 
     @GetMapping
-    public List<ResponseCompilationDto> findAll(@RequestParam(required = false) Boolean pinned,
+    public List<ResponseCompilationDTO> findAll(@RequestParam(required = false) Boolean pinned,
                                                 @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                                 @Positive @RequestParam(defaultValue = "10") Integer size) {
         PageRequest pageable = PageRequest.of(from / size, size);
@@ -28,7 +28,7 @@ public class PublicCompilationsController {
     }
 
     @GetMapping("/{compId}")
-    public ResponseCompilationDto findById(@PathVariable Long compId) {
+    public ResponseCompilationDTO findById(@PathVariable Long compId) {
         return compilationsService.findById(compId);
     }
 }

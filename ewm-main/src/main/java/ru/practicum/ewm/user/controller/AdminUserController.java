@@ -5,7 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.ewm.user.dto.UserDto;
+import ru.practicum.ewm.user.dto.UserDTO;
 import ru.practicum.ewm.user.service.AdminUserService;
 
 import javax.validation.Valid;
@@ -21,7 +21,7 @@ public class AdminUserController {
     private final AdminUserService adminUserService;
 
     @GetMapping
-    public List<UserDto> findAll(@RequestParam(required = false) List<Long> ids,
+    public List<UserDTO> findAll(@RequestParam(required = false) List<Long> ids,
                                  @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                  @Positive @RequestParam(defaultValue = "10") Integer size) {
         PageRequest page = PageRequest.of(from / size, size);
@@ -30,8 +30,8 @@ public class AdminUserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto create(@Valid @RequestBody UserDto userDto) {
-        return adminUserService.create(userDto);
+    public UserDTO create(@Valid @RequestBody UserDTO userDTO) {
+        return adminUserService.create(userDTO);
     }
 
     @DeleteMapping("/{userId}")

@@ -16,6 +16,7 @@ import ru.practicum.ewm.exception.ConflictException;
 import ru.practicum.ewm.exception.ObjectNotFoundException;
 import ru.practicum.ewm.location.model.Location;
 import ru.practicum.ewm.location.repository.LocationRepository;
+import ru.practicum.ewm.rating.repository.RatingRepository;
 import ru.practicum.ewm.requests.dto.RequestStatus;
 import ru.practicum.ewm.requests.repository.RequestsRepository;
 import ru.practicum.ewm.statistic.StatService;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PrivateEventService {
     private final RequestsRepository requestsRepository;
+    private final RatingRepository ratingRepository;
     private final LocationRepository locationRepository;
     private final EventRepository eventRepository;
     private final AdminUserRepository adminUserRepository;
@@ -40,69 +42,73 @@ public class PrivateEventService {
     private final StatService statService;
 
     @Transactional
-    public FullEventDto create(Long userId, CreateEventDto createEventDto) {
-        if (createEventDto.getEventDate().isBefore(LocalDateTime.now())) {
-            throw new ConflictException("Wrong date");
+    public FullEventDTO create(Long userId, CreateEventDTO createEventDTO) {
+        if (createEventDTO.getEventDate().isBefore(LocalDateTime.now())) {
+            throw new ConflictException("Wrong date.");
         }
         User initiator = adminUserRepository.findById(userId).orElseThrow(() -> {
-            throw new ObjectNotFoundException("User not found");
+            throw new ObjectNotFoundException("User not found.");
         });
-        Category category = categoryRepository.findById(createEventDto.getCategory()).orElseThrow(() -> {
-            throw new ObjectNotFoundException("Category not found");
+        Category category = categoryRepository.findById(createEventDTO.getCategory()).orElseThrow(() -> {
+            throw new ObjectNotFoundException("Category not found.");
         });
-        createEventDto.setLocation(locationRepository.save(createEventDto.getLocation()));
-        Event event = eventRepository.save(EventMapper.EVENT_MAPPER.toEventFromCreateDto(initiator, category, createEventDto));
-        FullEventDto fullEventDto = EventMapper.EVENT_MAPPER.toFullEventDto(event);
+        createEventDTO.setLocation(locationRepository.save(createEventDTO.getLocation()));
+        Event event = eventRepository.save(EventMapper.EVENT_MAPPER.toEventFromCreateDTO(initiator, category, createEventDTO));
+        FullEventDTO fullEventDto = EventMapper.EVENT_MAPPER.toFullEventDTO(event);
         fullEventDto.setConfirmedRequests(0);
+        fullEventDto.setRating(0L);
         return fullEventDto;
     }
 
-    public List<ShortEventDto> getEventsByCreator(Long userId, PageRequest pageable) {
-        List<ShortEventDto> shortEventDtos = eventRepository.findAllByInitiatorId(userId, pageable).stream()
-                .map(EventMapper.EVENT_MAPPER::toShortEventDto)
+    public List<ShortEventDTO> getEventsByCreator(Long userId, PageRequest pageable) {
+        List<ShortEventDTO> shortEventDTOS = eventRepository.findAllByInitId(userId, pageable).stream()
+                .map(EventMapper.EVENT_MAPPER::toShortEventDTO)
                 .collect(Collectors.toList());
-        EventUtil.getConfirmedRequestsToShort(shortEventDtos, requestsRepository);
-        return EventUtil.getViewsToShort(shortEventDtos, statService);
+        EventUtil.getConfirmedRequestsToShort(shortEventDTOS, requestsRepository);
+        EventUtil.getRatingToShortEvents(shortEventDTOS, ratingRepository);
+        return EventUtil.getViewsToShort(shortEventDTOS, statService);
     }
 
-    public FullEventDto getEventInfoByCreator(Long userId, Long eventId) {
-        Event event = eventRepository.findByInitiatorIdAndId(userId, eventId).orElseThrow();
+    public FullEventDTO getEventInfoByCreator(Long userId, Long eventId) {
+        Event event = eventRepository.findByInitIdAndId(userId, eventId).orElseThrow();
 
-        FullEventDto fullEventDto = EventMapper.EVENT_MAPPER.toFullEventDto(event);
+        FullEventDTO fullEventDto = EventMapper.EVENT_MAPPER.toFullEventDTO(event);
         fullEventDto.setConfirmedRequests(requestsRepository
                 .findAllByEventIdAndStatus(eventId, RequestStatus.CONFIRMED).size());
+        EventUtil.getRatingToFullEvents(Collections.singletonList(fullEventDto), ratingRepository);
         return EventUtil.getViews(Collections.singletonList(fullEventDto), statService).get(0);
     }
 
     @Transactional
-    public FullEventDto updateEventByCreator(Long userId, Long eventId, EventUpdateRequestDto eventUpdateRequestDto) {
+    public FullEventDTO updateEventByCreator(Long userId, Long eventId, EventUpdateRequestDTO eventUpdateRequestDTO) {
         Event event = eventRepository.findById(eventId).orElseThrow();
         if (!event.getInitiator().getId().equals(userId)) {
-            throw new ObjectNotFoundException("You can't update this event");
+            throw new ObjectNotFoundException("You can't update this event.");
         }
-        if (eventUpdateRequestDto.getEventDate() != null) {
-            LocalDateTime time = LocalDateTime.parse(eventUpdateRequestDto.getEventDate(),
+        if (eventUpdateRequestDTO.getEventDate() != null) {
+            LocalDateTime time = LocalDateTime.parse(eventUpdateRequestDTO.getEventDate(),
                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             if (LocalDateTime.now().isAfter(time.minusHours(2))) {
-                throw new ConflictException("Event starts in less then 2 hours");
+                throw new ConflictException("Event starts in less then 2 hours.");
             }
         }
         if (event.getEventState().equals(EventState.PUBLISHED)) {
-            throw new ConflictException("You can't update published event");
+            throw new ConflictException("You can't update published event.");
         }
-        if (eventUpdateRequestDto.getCategory() != null && !Objects.equals(eventUpdateRequestDto.getCategory(),
+        if (eventUpdateRequestDTO.getCategory() != null && !Objects.equals(eventUpdateRequestDTO.getCategory(),
                 event.getCategory().getId())) {
-            Category category = categoryRepository.findById(eventUpdateRequestDto.getCategory()).orElseThrow();
+            Category category = categoryRepository.findById(eventUpdateRequestDTO.getCategory()).orElseThrow();
             event.setCategory(category);
         }
-        if (eventUpdateRequestDto.getLocation() != null) {
-            Location location = locationRepository.save(eventUpdateRequestDto.getLocation());
+        if (eventUpdateRequestDTO.getLocation() != null) {
+            Location location = locationRepository.save(eventUpdateRequestDTO.getLocation());
             event.setLocation(location);
         }
-        EventUtil.toEventFromUpdateRequestDto(event, eventUpdateRequestDto);
-        FullEventDto fullEventDto = EventMapper.EVENT_MAPPER.toFullEventDto(event);
+        EventUtil.toEventFromUpdateRequestDto(event, eventUpdateRequestDTO);
+        FullEventDTO fullEventDto = EventMapper.EVENT_MAPPER.toFullEventDTO(event);
         fullEventDto.setConfirmedRequests(requestsRepository.findAllByEventIdAndStatus(eventId, RequestStatus.CONFIRMED)
                 .size());
+        EventUtil.getRatingToFullEvents(Collections.singletonList(fullEventDto), ratingRepository);
         return EventUtil.getViews(Collections.singletonList(fullEventDto), statService).get(0);
     }
 }
