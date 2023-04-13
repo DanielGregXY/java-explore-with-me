@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.StatsClient;
-import ru.practicum.ewm.dto.EndpointHitDto;
+import ru.practicum.ewm.dto.EndpointHitDTO;
 
 import java.util.List;
 
@@ -28,8 +28,8 @@ public class StatService {
     }
 
     @Transactional
-    public void createView(EndpointHitDto endpointHitDto) {
-        log.info("StatsService - method call 'createView' with params: endpointHitDto={}", endpointHitDto);
-        statsClient.create(endpointHitDto);
+    public void createView(EndpointHitDTO endpointHitDTO) {
+        log.info("StatsService - method call 'createView' with params: endpointHitDTO={}", endpointHitDTO);
+        statsClient.create(endpointHitDTO);
     }
 }

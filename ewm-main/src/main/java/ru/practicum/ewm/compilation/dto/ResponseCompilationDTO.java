@@ -1,8 +1,7 @@
 package ru.practicum.ewm.compilation.dto;
 
 import lombok.*;
-
-import javax.validation.constraints.NotBlank;
+import ru.practicum.ewm.events.dto.ShortEventDTO;
 
 import java.util.List;
 
@@ -10,9 +9,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewCompilationDto {
-    private List<Long> events;
+public class ResponseCompilationDTO {
+    private Long id;
+    private List<ShortEventDTO> events;
     private Boolean pinned;
-    @NotBlank
     private String title;
 }

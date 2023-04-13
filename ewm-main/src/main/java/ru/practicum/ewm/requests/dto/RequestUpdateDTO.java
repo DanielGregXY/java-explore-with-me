@@ -8,7 +8,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestUpdateDto {
-    List<RequestDto> confirmedRequests;
-    List<RequestDto> rejectedRequests;
+public class RequestUpdateDTO {
+    List<RequestDTO> confirmedRequests;
+    List<RequestDTO> rejectedRequests;
 }

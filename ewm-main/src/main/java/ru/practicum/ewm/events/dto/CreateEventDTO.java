@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateEventDto {
+public class CreateEventDTO {
     @NotNull
     @Size(min = 5, max = 2000)
     private String annotation;

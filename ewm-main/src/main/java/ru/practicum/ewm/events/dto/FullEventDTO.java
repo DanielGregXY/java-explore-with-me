@@ -1,0 +1,33 @@
+package ru.practicum.ewm.events.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import ru.practicum.ewm.categories.dto.CategoryDTO;
+import ru.practicum.ewm.location.model.Location;
+import ru.practicum.ewm.user.dto.UserDTO;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class FullEventDTO {
+    private Long id;
+    private String annotation;
+    private CategoryDTO category;
+    private Integer confirmedRequests;
+    private String createdOn;
+    private String description;
+    private String eventDate;
+    private UserDTO.UserShortDTO initiator;
+    private Location location;
+    private Boolean paid;
+    private Integer participantLimit;
+    private String publishedOn;
+    private Boolean requestModeration;
+    private String state;
+    private String title;
+    private Long views;
+    private Long rating;
+}
