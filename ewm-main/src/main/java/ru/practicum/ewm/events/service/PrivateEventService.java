@@ -61,7 +61,7 @@ public class PrivateEventService {
     }
 
     public List<ShortEventDTO> getEventsByCreator(Long userId, PageRequest pageable) {
-        List<ShortEventDTO> shortEventDTOS = eventRepository.findAllByInitId(userId, pageable).stream()
+        List<ShortEventDTO> shortEventDTOS = eventRepository.findAllByInitiatorId(userId, pageable).stream()
                 .map(EventMapper.EVENT_MAPPER::toShortEventDTO)
                 .collect(Collectors.toList());
         EventUtil.getConfirmedRequestsToShort(shortEventDTOS, requestsRepository);
@@ -70,7 +70,7 @@ public class PrivateEventService {
     }
 
     public FullEventDTO getEventInfoByCreator(Long userId, Long eventId) {
-        Event event = eventRepository.findByInitIdAndId(userId, eventId).orElseThrow();
+        Event event = eventRepository.findByInitiatorIdAndId(userId, eventId).orElseThrow();
 
         FullEventDTO fullEventDto = EventMapper.EVENT_MAPPER.toFullEventDTO(event);
         fullEventDto.setConfirmedRequests(requestsRepository

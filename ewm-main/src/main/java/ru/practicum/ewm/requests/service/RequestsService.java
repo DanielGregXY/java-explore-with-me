@@ -37,7 +37,7 @@ public class RequestsService {
 
     public List<RequestDTO> findByRequestId(Long userId) {
         log.info("Request sent");
-        return requestsRepository.findByRequestId(userId).stream()
+        return requestsRepository.findByRequesterId(userId).stream()
                 .map(RequestsMapper.REQUESTS_MAPPER::toRequestDTO)
                 .collect(Collectors.toList());
     }
@@ -86,7 +86,7 @@ public class RequestsService {
 
     @Transactional
     public RequestDTO cancelRequest(Long userId, Long requestId) {
-        ParticipationRequest request = requestsRepository.findByIdAndRequestId(requestId, userId).orElseThrow(() -> {
+        ParticipationRequest request = requestsRepository.findByIdAndRequesterId(requestId, userId).orElseThrow(() -> {
                     throw new ObjectNotFoundException("Request not found.");
                 }
         );

@@ -12,9 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface RequestsRepository extends JpaRepository<ParticipationRequest, Long> {
-    List<ParticipationRequest> findByRequestId(Long userId);
+    List<ParticipationRequest> findByRequesterId(Long userId);
 
-    Optional<ParticipationRequest> findByIdAndRequestId(Long requestId, Long userId);
+    Optional<ParticipationRequest> findByIdAndRequesterId(Long requestId, Long userId);
 
     @Query("select participationRequest from ParticipationRequest participationRequest " +
             "where participationRequest.event.id = :eventId " +
