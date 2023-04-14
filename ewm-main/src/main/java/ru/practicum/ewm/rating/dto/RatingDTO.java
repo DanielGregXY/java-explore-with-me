@@ -1,4 +1,4 @@
-package ru.practicum.ewm.categories.dto;
+package ru.practicum.ewm.rating.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,13 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDto {
+public class RatingDTO {
     private Long id;
+    private Long userId;
+    @NotNull
+    private Long eventId;
+    @NotNull
     @NotBlank
-    private String name;
+    private String ratingState;
 }

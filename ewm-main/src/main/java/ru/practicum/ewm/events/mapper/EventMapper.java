@@ -4,9 +4,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import ru.practicum.ewm.categories.model.Category;
-import ru.practicum.ewm.events.dto.CreateEventDto;
-import ru.practicum.ewm.events.dto.FullEventDto;
-import ru.practicum.ewm.events.dto.ShortEventDto;
+import ru.practicum.ewm.events.dto.CreateEventDTO;
+import ru.practicum.ewm.events.dto.FullEventDTO;
+import ru.practicum.ewm.events.dto.ShortEventDTO;
 import ru.practicum.ewm.events.model.Event;
 import ru.practicum.ewm.user.model.User;
 
@@ -19,18 +19,18 @@ public interface EventMapper {
     @Mapping(target = "eventState", constant = "PENDING")
     @Mapping(target = "createdOn", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "publishedOn", expression = "java(java.time.LocalDateTime.now())")
-    Event toEventFromCreateDto(User initiator, Category category, CreateEventDto createEventDto);
+    Event toEventFromCreateDTO(User initiator, Category category, CreateEventDTO createEventDTO);
 
     @Mapping(target = "createdOn", dateFormat = "yyyy-MM-dd HH:mm:ss")
     @Mapping(target = "eventDate", dateFormat = "yyyy-MM-dd HH:mm:ss")
     @Mapping(target = "publishedOn", dateFormat = "yyyy-MM-dd HH:mm:ss")
     @Mapping(target = "views", expression = "java(0L)")
     @Mapping(target = "state", expression = "java(event.getEventState().name())")
-    FullEventDto toFullEventDto(Event event);
+    FullEventDTO toFullEventDTO(Event event);
 
     @Mapping(target = "eventDate", dateFormat = "yyyy-MM-dd HH:mm:ss")
-    ShortEventDto toShortEventDto(Event event);
+    ShortEventDTO toShortEventDTO(Event event);
 
-    ShortEventDto toShortFromFull(FullEventDto fullEventDto);
+    ShortEventDTO toShortFromFull(FullEventDTO fullEventDTO);
 }
 

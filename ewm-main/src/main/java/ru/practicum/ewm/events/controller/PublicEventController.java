@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.ewm.events.dto.FullEventDto;
-import ru.practicum.ewm.events.dto.ShortEventDto;
+import ru.practicum.ewm.events.dto.FullEventDTO;
+import ru.practicum.ewm.events.dto.ShortEventDTO;
 import ru.practicum.ewm.events.service.PublicEventService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ public class PublicEventController {
     private final PublicEventService publicEventService;
 
     @GetMapping
-    public List<ShortEventDto> findEvents(@RequestParam(required = false) String text,
+    public List<ShortEventDTO> findEvents(@RequestParam(required = false) String text,
                                           @RequestParam(required = false) List<Long> categories,
                                           @RequestParam(required = false) Boolean paid,
                                           @RequestParam(required = false) String rangeStart,
@@ -37,7 +37,7 @@ public class PublicEventController {
     }
 
     @GetMapping("/{id}")
-    public FullEventDto findById(@PathVariable Long id,
+    public FullEventDTO findById(@PathVariable Long id,
                                  HttpServletRequest request) {
         return publicEventService.findById(id, request);
     }

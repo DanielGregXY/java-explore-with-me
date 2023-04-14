@@ -19,8 +19,8 @@ public interface RequestsRepository extends JpaRepository<ParticipationRequest, 
     @Query("select participationRequest from ParticipationRequest participationRequest " +
             "where participationRequest.event.id = :eventId " +
             "and participationRequest.requester.id = :userId")
-    Optional<ParticipationRequest> findByEventIdAndRequesterId(@Param("eventId") Long eventId,
-                                                               @Param("userId") Long userId);
+    Optional<ParticipationRequest> findByEventIdAndRequestId(@Param("eventId") Long eventId,
+                                                             @Param("userId") Long userId);
 
     @Query("select participationRequest from ParticipationRequest participationRequest " +
             "where participationRequest.event.id = :eventId " +
@@ -40,8 +40,8 @@ public interface RequestsRepository extends JpaRepository<ParticipationRequest, 
     @Query("select participationRequest from ParticipationRequest participationRequest " +
             "where participationRequest.event.id = :event " +
             "and participationRequest.id IN (:requestIds)")
-    List<ParticipationRequest> findByEventIdAndRequestsIds(@Param("event") Long eventId,
-                                                           @Param("requestIds") List<Long> requestIds);
+    List<ParticipationRequest> findByEventIdAndRequestIds(@Param("event") Long eventId,
+                                                          @Param("requestIds") List<Long> requestIds);
 
     List<ParticipationRequest> findAllByEventIdAndStatus(Long eventId, RequestStatus status);
 }

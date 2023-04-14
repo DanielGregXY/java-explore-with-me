@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.practicum.ewm.requests.dto.RequestDto;
+import ru.practicum.ewm.requests.dto.RequestDTO;
 
 import java.util.List;
 
@@ -13,6 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EventRequestStatusUpdateResult {
-    List<RequestDto> confirmedRequests;
-    List<RequestDto> rejectedRequests;
+    List<RequestDTO> confirmedRequests;
+    List<RequestDTO> rejectedRequests;
 }

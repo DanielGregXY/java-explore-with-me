@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserDTO {
     private Long id;
     @NotNull
     @Email
@@ -24,11 +24,11 @@ public class UserDto {
 
     @Getter
     @Setter
-    public static class UserShortDto {
+    public static class UserShortDTO {
         private Long id;
         private String name;
 
-        public UserShortDto(Long id, String name) {
+        public UserShortDTO(Long id, String name) {
             this.id = id;
             this.name = name;
         }

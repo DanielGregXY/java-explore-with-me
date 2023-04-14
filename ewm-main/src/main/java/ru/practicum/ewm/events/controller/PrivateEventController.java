@@ -7,8 +7,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.events.dto.*;
 import ru.practicum.ewm.events.service.PrivateEventService;
-import ru.practicum.ewm.requests.dto.RequestDto;
-import ru.practicum.ewm.requests.dto.RequestUpdateDto;
+import ru.practicum.ewm.requests.dto.RequestDTO;
+import ru.practicum.ewm.requests.dto.RequestUpdateDTO;
 import ru.practicum.ewm.requests.service.RequestsService;
 
 import javax.validation.Valid;
@@ -25,7 +25,7 @@ public class PrivateEventController {
     private final RequestsService requestsService;
 
     @GetMapping
-    public List<ShortEventDto> getEventsByCreator(@Positive @PathVariable Long userId,
+    public List<ShortEventDTO> getEventsByCreator(@Positive @PathVariable Long userId,
                                                   @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
                                                   @Positive @RequestParam(defaultValue = "10") Integer size) {
         PageRequest pageable = PageRequest.of(from / size, size);
@@ -34,32 +34,32 @@ public class PrivateEventController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public FullEventDto create(@Positive @PathVariable Long userId,
-                               @Valid @RequestBody CreateEventDto createEventDto) {
-        return privateEventService.create(userId, createEventDto);
+    public FullEventDTO create(@Positive @PathVariable Long userId,
+                               @Valid @RequestBody CreateEventDTO createEventDTO) {
+        return privateEventService.create(userId, createEventDTO);
     }
 
     @GetMapping("/{eventId}")
-    public FullEventDto getEventInfoByCreator(@Positive @PathVariable Long userId,
+    public FullEventDTO getEventInfoByCreator(@Positive @PathVariable Long userId,
                                               @Positive @PathVariable Long eventId) {
         return privateEventService.getEventInfoByCreator(userId, eventId);
     }
 
     @PatchMapping("/{eventId}")
-    public FullEventDto updateEvent(@Positive @PathVariable Long userId,
+    public FullEventDTO updateEvent(@Positive @PathVariable Long userId,
                                     @Positive @PathVariable Long eventId,
-                                    @RequestBody EventUpdateRequestDto eventUpdateRequestDto) {
-        return privateEventService.updateEventByCreator(userId, eventId, eventUpdateRequestDto);
+                                    @RequestBody EventUpdateRequestDTO eventUpdateRequestDTO) {
+        return privateEventService.updateEventByCreator(userId, eventId, eventUpdateRequestDTO);
     }
 
     @GetMapping("/{eventId}/requests")
-    public List<RequestDto> findEventRequests(@Positive @PathVariable Long userId,
+    public List<RequestDTO> findEventRequests(@Positive @PathVariable Long userId,
                                               @Positive @PathVariable Long eventId) {
         return requestsService.findByEventIdAndInitiatorId(eventId, userId);
     }
 
     @PatchMapping("/{eventId}/requests")
-    public RequestUpdateDto requestProcessing(@Positive @PathVariable Long userId,
+    public RequestUpdateDTO requestProcessing(@Positive @PathVariable Long userId,
                                               @Positive @PathVariable Long eventId,
                                               @Valid @RequestBody EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest) {
         return requestsService.requestProcessing(userId, eventId, eventRequestStatusUpdateRequest);

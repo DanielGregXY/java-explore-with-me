@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import ru.practicum.ewm.dto.EndpointHitDto;
+import ru.practicum.ewm.dto.EndpointHitDTO;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
 public class StatsClient {
     private final WebClient webClient;
 
-    public ResponseEntity<Object> create(EndpointHitDto endpointHitDto) {
+    public ResponseEntity<Object> create(EndpointHitDTO endpointHitDto) {
         return webClient.post()
                 .uri("/hit")
                 .contentType(MediaType.APPLICATION_JSON)
