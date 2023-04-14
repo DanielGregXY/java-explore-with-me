@@ -2,7 +2,6 @@ package ru.practicum.ewm.categories.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.FieldDefaults;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 

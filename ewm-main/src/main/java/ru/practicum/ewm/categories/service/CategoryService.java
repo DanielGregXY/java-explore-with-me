@@ -23,21 +23,21 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public CategoryDto create(CategoryDto CategoryDto) {
-        Category category = categoryRepository.save(CategoryMapper.CATEGORY_MAPPER.toCategory(CategoryDto));
+    public CategoryDto create(CategoryDto categoryDto) {
+        Category category = categoryRepository.save(CategoryMapper.CATEGORY_MAPPER.toCategory(categoryDto));
         log.info("Category created with id {}", category.getId());
         return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(category);
     }
 
     @Transactional
-    public CategoryDto update(long catId, CategoryDto CategoryDto) {
+    public CategoryDto update(long catId, CategoryDto categoryDto) {
         Category category = categoryRepository.findById(catId).orElseThrow(() -> {
             throw new ObjectNotFoundException("Category not found.");
         });
-        if (CategoryDto.getName().equals(category.getName())) {
+        if (categoryDto.getName().equals(category.getName())) {
             throw new ConflictException("Same category name.");
         }
-        category.setName(CategoryDto.getName());
+        category.setName(categoryDto.getName());
         log.info("Category with id {} updated", catId);
         return CategoryMapper.CATEGORY_MAPPER.toCategoryDto(categoryRepository.save(category));
     }
