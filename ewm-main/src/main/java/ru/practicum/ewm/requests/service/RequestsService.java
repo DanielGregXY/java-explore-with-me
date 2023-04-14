@@ -102,7 +102,7 @@ public class RequestsService {
             throw new ObjectNotFoundException("Event not found.");
         });
         if (!event.getInitiator().getId().equals(userId)) {
-            throw new ObjectNotFoundException("You don't have event with id " + eventId);
+            throw new ObjectNotFoundException(String.format("You don't have event with id %s",eventId));
         }
         if (!event.getRequestModeration() || event.getParticipantLimit() == 0) {
             throw new ConflictException("Confirmation is not required.");

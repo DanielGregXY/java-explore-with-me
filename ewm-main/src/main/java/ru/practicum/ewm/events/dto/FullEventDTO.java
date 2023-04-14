@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.practicum.ewm.categories.dto.CategoryDTO;
+import ru.practicum.ewm.categories.dto.CategoryDto;
 import ru.practicum.ewm.location.model.Location;
 import ru.practicum.ewm.user.dto.UserDTO;
 
@@ -15,7 +15,7 @@ import ru.practicum.ewm.user.dto.UserDTO;
 public class FullEventDTO {
     private Long id;
     private String annotation;
-    private CategoryDTO category;
+    private CategoryDto category;
     private Integer confirmedRequests;
     private String createdOn;
     private String description;
